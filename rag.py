@@ -8,18 +8,18 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.llms import OpenAI
 import streamlit as st
 import os
-import creds
+
 
 #----------------- Setting -------------------------
-api_key_openai = creds.api_key_openai
-api_key_pinecone = creds.api_key_pinecone
-directory = creds.directory
-index_name=creds.index_name
+api_key_openai = st.secrets["api_key_openai"]
+api_key_pinecone = st.secrets["api_key_pinecone"]
+directory = st.secrets["directory"]
+index_name=st.secrets["index_name"]
 #----------------- Setting -------------------------
  
 def setup_openai_api(api_key):
     if "OPENAI_API_KEY" not in os.environ:
-        os.environ["OPENAI_API_KEY"] = creds.api_key_openai
+        os.environ["OPENAI_API_KEY"] = api_key_openai
         print("OPENAI_API_KEY has been set!")
     else:
         exit
@@ -27,7 +27,7 @@ def setup_openai_api(api_key):
  
 def setup_pinecone_api(api_key):
     if "PINECONE_API_KEY" not in os.environ:
-        os.environ["PINECONE_API_KEY"] =creds.api_key_pinecone
+        os.environ["PINECONE_API_KEY"] = api_key_pinecone
     else:
         exit
 

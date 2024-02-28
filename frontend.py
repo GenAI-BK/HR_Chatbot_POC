@@ -12,13 +12,13 @@ update on 23 Feb 2024 by Jugal:
 
 import rag
 import streamlit as st
-import creds
+
 
 #----------------- Setting -------------------------
-api_key_openai = creds.api_key_openai
-api_key_pinecone = creds.api_key_pinecone
-directory = creds.directory
-index_name=creds.index_name
+api_key_openai = st.secrets["api_key_openai"]
+api_key_pinecone = st.secrets["api_key_pinecone"]
+directory = st.secrets["directory"]
+index_name=st.secrets["index_name"]
 #----------------- Setting -------------------------
 
 def generate_response(input_data_query):
