@@ -48,7 +48,13 @@ def initialize_embeddings():
     return embeddings
  
 
-memory= ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=5)
+# if "context_mem" not in st.session_state:
+#     memory= ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=5)
+#     st.session_state["context_mem"] = memory
+# else:
+#     memory=st.session_state["context_mem"]
+
+
 
 def create_retrieval_chain(vectorstore, embeddings, memory):
     chain = ConversationalRetrievalChain.from_llm(
@@ -65,6 +71,11 @@ def create_retrieval_chain(vectorstore, embeddings, memory):
 chat_history=[]
 
 def perform_conversational_retrieval(chain, query):
+    if "context_mem" not in st.session_state:
+        memory= ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=5)
+        st.session_state["context_mem"] = memory
+    else:
+        memory=st.session_state["context_mem"]
     output = chain(query, memory)
     chat_history.append(output)
     return output
@@ -84,7 +95,11 @@ def ask_model(api_key_openai, api_key_pinecone, directory):
     
     #index = Pinecone.from_documents(chunks, embeddings, index_name=index_name)
     vectorstore = Pinecone.from_existing_index(index_name=index_name,embedding = embeddings, namespace="")
-
+    if "context_mem" not in st.session_state:
+        memory= ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=5)
+        st.session_state["context_mem"] = memory
+    else:
+        memory=st.session_state["context_mem"]
     chain = create_retrieval_chain(vectorstore,embeddings, memory=memory)
     return chain
 
