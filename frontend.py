@@ -51,7 +51,7 @@ initial_prompts = {
 placeholder = st.empty()
 
 with placeholder.form(key='my_form'):
-    col1, col2, col3 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
         firstQ=st.form_submit_button(label="Explain Leave Policy of the company")
         thirdQ=st.form_submit_button(label="What are the assets provided by the company for an employee?")
